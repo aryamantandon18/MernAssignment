@@ -4,6 +4,7 @@ import '../styles/Navbar.css'
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/actions/userActions';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);

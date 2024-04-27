@@ -17,8 +17,9 @@ const store = new mongodbStore({
     collection: 'mySessions'
 });
 
-app.use(express.json({ limit: '30mb' }));
+app.use(express.json());               // { limit: '30mb' }
 app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true , limit: '50mb'}));
 
 app.use(session({
@@ -33,7 +34,7 @@ app.use(session({
 }));
 // CORS configuration
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: [process.env.FRONTEND_URL],
     credentials: true,
 }));
 

@@ -21,3 +21,7 @@ export const IMAGE_RESET = "IMAGE_RESET";
 
 
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+export const GET_IMAGES_REQUEST = "IMAGE_REQUEST";
+export const GET_IMAGES_SUCCESS = "IMAGE_SUCCESS";
+export const GET_IMAGES_FAILURE = "IMAGE_FAILURE";

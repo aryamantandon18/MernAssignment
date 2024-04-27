@@ -9,7 +9,7 @@ const Home = () => {
   const [title, setTitle] = useState('');
   const [image,setImage] = useState('');
   const { isAuthenticated } = useSelector(state => state.user);
-  const {isUploaded,user,error:ImageError,loading:imageLoading } = useSelector(state => state);
+  const {isUploaded,user,error:ImageError,loading:imageLoading } = useSelector(state => state.ImageReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, IMAGE_FAILURE, IMAGE_REQUEST, IMAGE_RESET, IMAGE_SUCCESS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from '../constants/userConstants'
+import { CLEAR_ERRORS, GET_IMAGES_FAILURE, GET_IMAGES_REQUEST, GET_IMAGES_SUCCESS, IMAGE_FAILURE, IMAGE_REQUEST, IMAGE_RESET, IMAGE_SUCCESS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from '../constants/userConstants'
 
 export const UserReducer = (state = {user:{}},action) =>{
 switch(action.type){
@@ -98,4 +98,38 @@ export const ImageReducer = (state = initialState,action) =>{
           return state;
       }
     
+}
+
+const initialState2 = {
+    images: [],
+    loading: false,
+    error: null
+  };
+export const getUserImages = (state = initialState2,action) =>{
+    switch (action.type) {
+        case GET_IMAGES_REQUEST:
+          return {
+            ...state,
+            loading: true,
+            error: null
+          };
+    
+        case GET_IMAGES_SUCCESS:
+          return {
+            ...state,
+            loading: false,
+            images: action.payload, // Update images array with the fetched images
+            error: null
+          };
+    
+        case GET_IMAGES_FAILURE:
+          return {
+            ...state,
+            loading: false,
+            error: action.payload // Set error message in case of failure
+          };
+    
+        default:
+          return state;
+}
 }

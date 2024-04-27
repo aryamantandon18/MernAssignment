@@ -6,13 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import ShareIcon from '@mui/icons-material/Share';
 import AttachEmailIcon from '@mui/icons-material/AttachEmail';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { getImages } from '@/actions/userActions';
+import '../styles/images.css'
 
 const Images = () => {
   const navigate = useNavigate();
   const {user,isAuthenticated} = useSelector(state => state.user);
-
+  const {images,error} = useSelector(state=>state.getUserImages);
+  const dispatch = useDispatch();
 
   const handleDeleteImage = async (id, link) => {
 
@@ -32,13 +35,14 @@ const Images = () => {
   };
 
   useEffect(()=>{
+    dispatch(getImages());
  if(!isAuthenticated || !user){
     toast.error("Login First");
     navigate('/login');
  }
  console.log(user);
  console.log(user.images)
-  },[isAuthenticated,user])
+  },[isAuthenticated,user,images])
 
     const columns=[
         {field:"id", headerName:"Image ID", minWidth:100,flex:0.1},
@@ -97,8 +101,8 @@ const Images = () => {
     ]
     const rows = [];
     
-    if(Array.isArray(user && user.images)){
-       user.images.map((image,index)=>{
+    if(Array.isArray(user && images)){
+       images.map((image,index)=>{
         rows.push({
             id:index + 1,
             image:image.url,
@@ -110,7 +114,7 @@ const Images = () => {
 
     return (
             <Fragment>
-            <div className='imageListContainer'>
+            <div className='imageListContainer pt-[80px]'>
                 <h1 id='imageListHeading'>ALL IMAGES</h1>
             <DataGrid
             rows={rows}

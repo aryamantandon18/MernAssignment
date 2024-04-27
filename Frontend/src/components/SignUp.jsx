@@ -22,8 +22,18 @@ const SignUp = () => {
   const HandleSubmit = (e)=>{
     e.preventDefault();
     console.log(name, email , password);
-    dispatch(signup(name,email,password));
-    toast.success("Signup Successfull")
+
+    try {
+      dispatch(signup({name,email,password}));
+      toast.success("Signup Successful");
+    } catch (error) {
+      console.error("Axios Error:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+        console.error("Response Status:", error.response.status);
+      }
+      toast.error("Error occurred during signup");
+    }
   }
 
   const HandleChange =(e)=>{
