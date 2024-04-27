@@ -2,11 +2,12 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import {thunk} from "redux-thunk";
 import promiseMiddleware from 'redux-promise';
-import { UserReducer } from "./reducers/userReducer";
+import { ImageReducer, UserReducer } from "./reducers/userReducer";
 
 // Define your reducer
 const reducer = combineReducers({
  user:UserReducer,
+ ImageReducer:ImageReducer,
 });
 
 let initialState = {

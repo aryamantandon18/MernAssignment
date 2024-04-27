@@ -23,13 +23,14 @@ const SignUp = () => {
     e.preventDefault();
     console.log(name, email , password);
     dispatch(signup(name,email,password));
+    toast.success("Signup Successfull")
   }
 
   const HandleChange =(e)=>{
     const { name, value } = e.target;
     if (name === 'name') setName(value);
-    else if (name === 'email') setEmail(value);
-    else if (name === 'password') setPassword(value);
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
   }
 
   useEffect(()=>{

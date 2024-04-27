@@ -7,7 +7,7 @@ import { logout } from '@/actions/userActions';
 
 const Navbar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const {isAuthenticated} = useSelector(state=> state.user);
+  const {isAuthenticated,user} = useSelector(state=> state.user);
   const dispatch = useDispatch();
   const navRef = useRef(null);
   const showNavbar =()=>{
@@ -18,6 +18,7 @@ const Navbar = () => {
 
   const HandleLogout =() =>{
     dispatch(logout());
+    toast.success("Logout Successfull");
   }
   useEffect(() => {
     const handleResize = () => {
@@ -50,11 +51,11 @@ const Navbar = () => {
         <Link className='transition ease-in-out delay-80  p-2 lg:hover:underline underline-offset-[29px] lg:font-semibold focus:font-bold  hover:font-bold' to={"/"} onClick={showNavbar}>Home</Link>
         <Link className=' transition ease-in-out delay-80 p-2 lg:hover:underline underline-offset-[29px] lg:font-semibold focus:font-bold hover:font-bold' to={"/about"} onClick={showNavbar}>About</Link>
         <Link className=' transition ease-in-out delay-80 p-2 lg:hover:underline underline-offset-[29px] lg:font-semibold focus:font-bold  hover:font-bold' onClick={showNavbar}>Contact</Link>
-        <Link className='transition ease-in-out delay-80 p-2 lg:hover:underline underline-offset-[29px] lg:font-semibold focus:font-bold  hover:font-bold' onClick={showNavbar}>Others</Link>
+        <Link className='transition ease-in-out delay-80 p-2 lg:hover:underline underline-offset-[29px] lg:font-semibold focus:font-bold  hover:font-bold' to={"/images"} onClick={showNavbar}>Images</Link>
     </div>
     <div className='flex items-center lg:p-2 lg:gap-6 flex-col lg:flex-row navbtnContainer' ref={navRef}>
     {isAuthenticated ? (  
-    <Link to={HandleLogout}><button className='navbtn items-center class="lg:w-20 lg:px-4 lg:py-3 lg:bg-[#0f172a]  rounded-md lg:text-white font-sans lg:text-xl outline-none lg:focus:ring-4 lg:shadow-lg lg:transform active:scale-y-75 lg:transition-transform flex text-lg mr-2' >Logout</button></Link>
+    <Link onClick={HandleLogout}><button className='navbtn items-center class="lg:w-20 lg:px-4 lg:py-3 lg:bg-[#0f172a]  rounded-md lg:text-white font-sans lg:text-xl outline-none lg:focus:ring-4 lg:shadow-lg lg:transform active:scale-y-75 lg:transition-transform flex text-lg mr-2' >Logout</button></Link>
   ) :(
   <>
     <Link to={"/login"}><button className='navbtn items-center class="lg:w-20 lg:px-4 lg:py-3 lg:bg-[#0f172a]  rounded-md lg:text-white font-sans lg:text-xl outline-none lg:focus:ring-4 lg:shadow-lg lg:transform active:scale-y-75 lg:transition-transform flex text-lg' >LogIn</button></Link>

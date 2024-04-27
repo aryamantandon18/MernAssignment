@@ -1,9 +1,11 @@
 import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/user.js";
 import bcrypt from "bcrypt";
+import cloudinary from 'cloudinary'
 
 export const SignUp = async (req, res,next) => {
   try {
+    console.log("Line 8 - ",req.body);
     const { name, email, password } = req.body;
 
     console.log("Received request body:", req.body);
@@ -24,7 +26,7 @@ export const SignUp = async (req, res,next) => {
     console.log("line 22")
     const hashedPswd = await bcrypt.hash(password, 10);
     console.log(hashedPswd);
-    user = await User.create({ name, email, password: hashedPswd });
+    user = await User.create({ name, email, password: hashedPswd ,images:[]});
 
     return res.status(200).json({
       success:true,
@@ -92,17 +94,57 @@ try{
 }
 }
 
-export const getMyProfile =(req,res,next)=>{
-try {
-  const user = req.session.user;
-  if(!user) return next(new ErrorHandler("Login First",404));
-  
-  res.status(200).json({
-    success:true,
-    message:"Here is the user",
-    user,
-  })
-} catch (error) {
-  return next(new ErrorHandler(error.message, 500));
-}
-}
+export const getMyProfile = (req, res, next) => {
+  try {
+    console.log("line 97 ")
+      const user = req.session.user;
+      if (!user) {
+          throw new ErrorHandler("Login First", 404);
+      }
+      
+      res.status(200).json({
+          success: true,
+          message: "Here is the user",
+          user: user
+      });
+  } catch (error) {
+      next(error); // Pass the error to the error handling middleware
+  }
+};
+
+export const uploadImage = async (req, res) => {
+  try {
+    console.log(req.body);
+    const userId = req.session.user.id; // Assuming user ID is available in request
+    let user = await User.findOne({_id:userId});
+    // console.log(user);
+    console.log("Line 117");
+    if(!user){
+      return next(new ErrorHandler("User not found" , 404));
+    }
+    console.log("Line 121");
+    const result = await cloudinary.v2.uploader.upload(req.body.image, {
+      folder: "userImages",
+      width: 150,
+      crop: "scale"
+    });
+    console.log(result);
+    console.log("Line 127");
+    const newImage = {
+      title:req.body.title,
+      public_id: result.public_id,  
+      url: result.secure_url
+    };
+   
+    user.images.push(newImage);
+    user.save();
+    return res.status(201).json({
+      success:true,
+      message:"Image Uploaded Successfully"
+    })
+
+  } catch (error) {
+    console.error("Image upload error:", error);
+    res.status(500).json({ success: false, message: 'Image upload failed' });
+  }
+};

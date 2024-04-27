@@ -14,4 +14,10 @@ export const LOAD_USER_FAIL="LOAD_USER_FAIL";
 export const LOGOUT_SUCCESS="LOGOUT_SUCCESS";
 export const LOGOUT_FAIL = "LOGOUT_FAIL";
 
+export const IMAGE_REQUEST = "IMAGE_REQUEST";
+export const IMAGE_SUCCESS = "IMAGE_SUCCESS";
+export const IMAGE_FAILURE = "IMAGE_FAILURE";
+export const IMAGE_RESET = "IMAGE_RESET";
+
+
 export const CLEAR_ERRORS = "CLEAR_ERRORS";

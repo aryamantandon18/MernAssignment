@@ -22,6 +22,7 @@ const Login = () => {
     e.preventDefault();
     console.log(email , password);
     dispatch(login(email,password));
+    toast.success("LoggedIn successfully")
   }
   const HandleChange =(e)=>{
     const { name, value } = e.target;
@@ -38,7 +39,7 @@ const Login = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  },[error,isAuthenticated,dispatch])
+  },[error,isAuthenticated,dispatch,navigate])
 
   return (
     <div className='pt-[80px] flex items-center justify-center h-screen'>

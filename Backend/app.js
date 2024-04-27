@@ -17,7 +17,7 @@ const store = new mongodbStore({
     collection: 'mySessions'
 });
 
-app.use(express.json());
+app.use(express.json({ limit: '30mb' }));
 app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.urlencoded({extended:true , limit: '50mb'}));
 
@@ -25,14 +25,17 @@ app.use(session({
     secret: "key that will sign the cookie",
     resave:false,
     saveUninitialized:true,       
-    cookie: {secure:true},
+    cookie: {
+        secure: false, // Set to true in production with HTTPS
+        maxAge: 1000 * 60 * 60 * 24 // Session TTL (optional)
+    },
     store:store
 }));
-
-// app.use(cors({
-//     origin:"*",
-//     credentials:true,
-// }))
+// CORS configuration
+app.use(cors({
+    origin: ['http://localhost:5173'],
+    credentials: true,
+}));
 
 app.use('/users',userRoutes);
 
