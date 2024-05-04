@@ -5,7 +5,7 @@ import './index.css'
 import {Provider} from 'react-redux'
 import store from './store.js'
 
-export const server = 'http://localhost:4000'
+export const server = 'https://mernassignbackend.onrender.com'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <App />

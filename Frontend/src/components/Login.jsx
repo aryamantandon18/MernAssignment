@@ -21,7 +21,7 @@ const Login = () => {
   const HandleSubmit = (e)=>{
     e.preventDefault();
     console.log(email , password);
-    dispatch(login({email,password}));
+    dispatch(login(email,password));
     toast.success("LoggedIn successfully")
   }
   const HandleChange =(e)=>{
